@@ -1,0 +1,2 @@
+const rules=[['image',/image|photo|图像|图片/],['document',/document|word|docx|文档/],['sheet',/sheet|excel|spreadsheet/],['presentation',/slide|presentation|powerpoint/],['browser',/browser|playwright|chrome/],['github',/github|pull request|\bpr\b/],['mail',/gmail|email|mail/],['security',/security|threat|安全/],['search',/search|scholar|搜索/],['code',/code|debug|test|开发/]];
+export function chooseIcon(skill){const text=`${skill.name} ${skill.description}`.toLowerCase();return rules.find(([,r])=>r.test(text))?.[0]||'skill';}

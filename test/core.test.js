@@ -1,0 +1,4 @@
+import test from 'node:test'; import assert from 'node:assert/strict'; import { resolveRuntimePaths } from '../src/paths.js'; import { parseSkillDocument } from '../src/frontmatter.js'; import { chooseIcon } from '../src/icon-map.js';
+test('resolves Linux XDG and CODEX_HOME',()=>{const p=resolveRuntimePaths({platform:'linux',env:{CODEX_HOME:'/c',XDG_DATA_HOME:'/d'},homeDir:'/h',cli:{scanDirs:[]}});assert.equal(p.codexHome,'/c');assert.equal(p.dataDir,'/d/codex-skill-dashboard');});
+test('parses simple skill metadata safely',()=>{assert.deepEqual(parseSkillDocument('---\nname: demo\ndescription: "Does work"\n---\nbody','fallback'),{name:'demo',description:'Does work',warnings:[]});});
+test('falls back for malformed metadata and generic icon',()=>{assert.equal(parseSkillDocument('body','fallback').name,'fallback');assert.equal(chooseIcon({name:'unknown',description:''}),'skill');});
