@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
@@ -11,12 +10,13 @@ import { createSkillService } from '../src/service.js';
 import { createServer } from '../src/server.js';
 import { trashSkill, openSkillDirectory } from '../src/platform-actions.js';
 import { acquireInstanceLock, createIdleController } from '../src/lifecycle.js';
+import { createAssetProvider } from '../src/assets.js';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const options = parseArgs(process.argv.slice(2));
-const pkg = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
+const version = globalThis.__CSD_VERSION__ || '0.1.0';
 if (options.help) { console.log('codex-skill-dashboard [--no-open] [--no-idle-exit] [--port N] [--codex-home PATH] [--scan-dir PATH] [--data-dir PATH]'); process.exit(0); }
-if (options.version) { console.log(pkg.version); process.exit(0); }
+if (options.version) { console.log(version); process.exit(0); }
 
 const paths = resolveRuntimePaths({ cli: options });
 const instance = await acquireInstanceLock({ runtimeDir: path.join(paths.dataDir, 'runtime') });
@@ -44,7 +44,9 @@ const shutdown = async () => {
   await instance.release();
 };
 const idle = createIdleController({ disabled: !options.idleExit, onIdle: () => shutdown().then(() => process.exit(0)) });
-server = createServer({ service, publicDir: new URL('../public/', import.meta.url), actions, session: { token: instance.record.token, heartbeat: () => idle.heartbeat() } });
+const embeddedAssets = globalThis.__CSD_EMBEDDED_ASSETS__;
+const assetProvider = embeddedAssets ? createAssetProvider({ mode: 'embedded', embeddedAssets }) : undefined;
+server = createServer({ service, publicDir: new URL('../public/', import.meta.url), assetProvider, actions, session: { token: instance.record.token, heartbeat: () => idle.heartbeat() } });
 server.listen(options.port, '127.0.0.1', async () => {
   const port = server.address().port;
   const url = `http://127.0.0.1:${port}`;

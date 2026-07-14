@@ -5,13 +5,31 @@
   "type": "module",
   "private": false,
   "license": "MIT",
-  "engines": { "node": ">=22" },
-  "bin": { "codex-skill-dashboard": "./bin/codex-skill-dashboard.js" },
-  "files": ["bin", "src", "public", "README.md", "README.zh-CN.md", "LICENSE"],
-  "dependencies": { "trash": "10.1.1" },
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "codex-skill-dashboard": "./bin/codex-skill-dashboard.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "public",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "trash": "10.1.1"
+  },
   "scripts": {
     "start": "node bin/codex-skill-dashboard.js",
     "test": "node --test",
+    "build:bundle": "node build/bundle.mjs",
+    "build:sea": "node build/build-sea.mjs",
     "pack:check": "npm pack --dry-run --json"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.6"
   }
 }
