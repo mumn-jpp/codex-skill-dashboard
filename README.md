@@ -2,9 +2,19 @@
 
 Cross-platform local dashboard for discovering, annotating, copying, and safely moving user-installed Codex skills to the operating-system trash.
 
-## Run
+## Install for ordinary users
 
-Requires Node.js 22 or newer.
+Download the release for your operating system:
+
+- Windows: run `Codex-Skill-Dashboard-Setup-<version>-unsigned.exe`, then use the desktop or Start Menu shortcut.
+- Linux: launch the AppImage, or install the DEB and use the application-menu icon.
+- macOS: open the DMG, drag the app to Applications, then click its icon.
+
+The native releases include their runtime. Node.js, npm, pnpm, and Git are not required. The app never registers itself to start at boot and never installs a background service. It starts only when you click it; after all dashboard pages are closed for about 60 seconds, the local process exits.
+
+## Developer run
+
+Source and npm use require Node.js 22 or newer.
 
 ```bash
 npx codex-skill-dashboard

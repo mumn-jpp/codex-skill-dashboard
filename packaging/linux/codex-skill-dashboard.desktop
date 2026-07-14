@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Codex Skill Dashboard
+Comment=Discover and manage local Codex skills
+Exec=codex-skill-dashboard
+Icon=codex-skill-dashboard
+Terminal=false
+Categories=Development;Utility;

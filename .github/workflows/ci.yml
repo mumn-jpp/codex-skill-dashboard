@@ -5,7 +5,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
-        node: [22, 24]
+        node: [22, 26]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -16,4 +16,5 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
       - run: node bin/codex-skill-dashboard.js --help
+      - run: pnpm run build:bundle
       - run: pnpm pack --dry-run
