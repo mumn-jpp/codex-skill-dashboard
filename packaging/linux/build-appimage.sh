@@ -16,4 +16,4 @@ exec "$HERE/usr/bin/codex-skill-dashboard" "$@"
 EOF
 chmod +x "$APPDIR/AppRun" "$APPDIR/usr/bin/codex-skill-dashboard"
 : "${APPIMAGETOOL:?Set APPIMAGETOOL to appimagetool path}"
-ARCH=x86_64 "$APPIMAGETOOL" "$APPDIR" "$ROOT/dist/Codex-Skill-Dashboard-x86_64.AppImage"
+ARCH=x86_64 APPIMAGE_EXTRACT_AND_RUN=1 "$APPIMAGETOOL" "$APPDIR" "$ROOT/dist/Codex-Skill-Dashboard-x86_64.AppImage"
