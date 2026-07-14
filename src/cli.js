@@ -1,10 +1,11 @@
 const valueFlags = new Map([['--port','port'],['--codex-home','codexHome'],['--scan-dir','scanDir'],['--data-dir','dataDir'],['--host','host']]);
 
 export function parseArgs(argv) {
-  const out = { open: true, port: 43127, scanDirs: [] };
+  const out = { open: true, idleExit: true, port: 43127, scanDirs: [] };
   for (let i=0;i<argv.length;i++) {
     const arg=argv[i];
     if (arg==='--no-open') out.open=false;
+    else if (arg==='--no-idle-exit') out.idleExit=false;
     else if (arg==='--help') out.help=true;
     else if (arg==='--version') out.version=true;
     else if (valueFlags.has(arg)) {
